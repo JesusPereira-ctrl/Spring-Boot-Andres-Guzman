@@ -29,7 +29,6 @@
 ### Development Tools
 
 - [Java Development Kit](https://sdkman.io/)
-- [Maven](https://sdkman.io/)
 
 ### Code Editor
 
