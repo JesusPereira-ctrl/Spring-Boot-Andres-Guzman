@@ -20,11 +20,7 @@ public class ProductRepositoryJson implements ProductRepository {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             list = Arrays.asList(objectMapper.readValue(resource.getFile(), Product[].class));
-        } catch (StreamReadException e) {
-            e.printStackTrace(System.err);
-        } catch (DatabindException e) {
-            e.printStackTrace(System.err);
-        } catch (IOException e) {
+        } catch (StreamReadException | DatabindException | IOException e) {
             e.printStackTrace(System.err);
         }
     }
@@ -36,6 +32,9 @@ public class ProductRepositoryJson implements ProductRepository {
 
     @Override
     public Product findById(Long id) {
-        return null;
+        return list.stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .orElseThrow();
     }
 }
