@@ -35,4 +35,8 @@ public class Invoice {
     public List<Item> getItems() {
         return items;
     }
+
+    public int getTotal() {
+        return 0;
+    }
 }
