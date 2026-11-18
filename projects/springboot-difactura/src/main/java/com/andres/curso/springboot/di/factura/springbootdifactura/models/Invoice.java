@@ -13,10 +13,11 @@ public class Invoice {
     @Value("${invoice.description}")
     private String description;
 
-    private List<Item> items;
+    private final List<Item> items;
 
-    public Invoice(Client client) {
+    public Invoice(Client client, List<Item> items) {
         this.client = client;
+        this.items = items;
     }
 
     public Client getClient() {
@@ -33,9 +34,5 @@ public class Invoice {
 
     public List<Item> getItems() {
         return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
     }
 }
