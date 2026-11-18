@@ -3,8 +3,6 @@ package com.andres.springboot.di.app.springbootdi.repositories;
 import com.andres.springboot.di.app.springbootdi.models.Product;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import tools.jackson.core.exc.StreamReadException;
-import tools.jackson.databind.DatabindException;
 import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -17,10 +15,18 @@ public class ProductRepositoryJson implements ProductRepository {
 
     public ProductRepositoryJson() {
         Resource resource = new ClassPathResource("json/product.json");
+        readValueJson(resource);
+    }
+
+    public ProductRepositoryJson(Resource resource) {
+        readValueJson(resource);
+    }
+
+    private void readValueJson(Resource resource) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            list = Arrays.asList(objectMapper.readValue(resource.getFile(), Product[].class));
-        } catch (StreamReadException | DatabindException | IOException e) {
+            list = Arrays.asList(objectMapper.readValue(resource.getInputStream(), Product[].class));
+        } catch (IOException e) {
             e.printStackTrace(System.err);
         }
     }
