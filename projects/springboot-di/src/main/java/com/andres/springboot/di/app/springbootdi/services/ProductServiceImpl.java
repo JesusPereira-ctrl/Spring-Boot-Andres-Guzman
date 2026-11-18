@@ -13,7 +13,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-    public ProductServiceImpl(@Qualifier("productFoo") ProductRepository productRepository) {
+    public ProductServiceImpl(@Qualifier("productList") ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
@@ -25,6 +25,8 @@ public class ProductServiceImpl implements ProductService {
             Product newProd = (Product) p.clone();
             newProd.setPrice(priceTax.longValue());
             return newProd;
+            // p.setPrice(priceTax.longValue());
+            // return p;
         }).collect(Collectors.toList());
     }
 
