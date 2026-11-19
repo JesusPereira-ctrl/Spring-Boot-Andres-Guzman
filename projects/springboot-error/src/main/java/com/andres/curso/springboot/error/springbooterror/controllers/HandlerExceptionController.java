@@ -1,8 +1,10 @@
 package com.andres.curso.springboot.error.springbooterror.controllers;
 
+import com.andres.curso.springboot.error.springbooterror.exceptions.UserNotFoundException;
 import com.andres.curso.springboot.error.springbooterror.models.Error;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -33,6 +35,18 @@ public class HandlerExceptionController {
         Map<String, Object> error = new HashMap<>();
         error.put("date", new Date());
         error.put("error", "Numero invalido o incorrecto, no tiene formato de digito!");
+        error.put("message", ex.getMessage());
+        error.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+
+        return error;
+    }
+
+    @ExceptionHandler({NullPointerException.class, HttpMessageNotWritableException.class, UserNotFoundException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Map<String, Object> userNotFoundException(Exception ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("date", new Date());
+        error.put("error", "el usuario o role no existe!");
         error.put("message", ex.getMessage());
         error.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
 
