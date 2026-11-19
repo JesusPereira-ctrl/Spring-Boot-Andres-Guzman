@@ -1,6 +1,7 @@
 package com.andres.curso.springboot.di.factura.springbootdifactura.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -11,12 +12,12 @@ public class Invoice {
 
     private final Client client;
 
-    @Value("${invoice.description}")
+    @Value("${invoice.description.sport}")
     private String description;
 
     private final List<Item> items;
 
-    public Invoice(Client client, List<Item> items) {
+    public Invoice(Client client, @Qualifier("default") List<Item> items) {
         this.client = client;
         this.items = items;
     }
