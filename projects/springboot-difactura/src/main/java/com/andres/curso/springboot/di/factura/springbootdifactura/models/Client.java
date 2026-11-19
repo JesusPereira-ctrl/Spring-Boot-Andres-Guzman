@@ -1,6 +1,5 @@
 package com.andres.curso.springboot.di.factura.springbootdifactura.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -8,7 +7,7 @@ import org.springframework.web.context.annotation.RequestScope;
 
 @Component
 @RequestScope
-@JsonIgnoreProperties({"targetSource", "advisors"})
+// @JsonIgnoreProperties({"targetSource", "advisors"})
 public class Client {
 
     @Value("${client.name}")
@@ -22,12 +21,16 @@ public class Client {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @JsonProperty
     public String getLastName() {
         return lastName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
