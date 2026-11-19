@@ -3,7 +3,6 @@ package com.andres.curso.springboot.error.springbooterror.services;
 import com.andres.curso.springboot.error.springbooterror.models.domain.User;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,14 +11,8 @@ public class UserServiceImpl implements UserService {
 
     private final List<User> users;
 
-    public UserServiceImpl() {
-        this.users = Arrays.asList(
-                new User(1L, "Pepe", "Gonzalez"),
-                new User(2L, "Andres", "Mena"),
-                new User(3L, "Maria", "Perez"),
-                new User(4L, "Josefa", "Ramirez"),
-                new User(5L, "Ale", "Gutierrez")
-        );
+    public UserServiceImpl(List<User> users) {
+        this.users = users;
     }
 
     @Override
@@ -29,15 +22,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findById(Long id) {
-        User user = null;
-
-        for (User u : users) {
-            if (u.getId().equals(id)) {
-                user = u;
-                break;
-            }
-        }
-
-        return Optional.ofNullable(user);
+        return users.stream()
+                .filter(usr -> usr.getId().equals(id))
+                .findFirst();
     }
 }
