@@ -22,4 +22,8 @@ public class Client {
     public String getLastName() {
         return lastName;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
