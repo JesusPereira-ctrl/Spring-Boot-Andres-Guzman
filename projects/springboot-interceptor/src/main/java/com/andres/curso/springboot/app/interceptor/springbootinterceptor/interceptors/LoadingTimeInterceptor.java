@@ -10,6 +10,8 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Random;
+
 @Component
 public class LoadingTimeInterceptor implements HandlerInterceptor {
 
@@ -23,6 +25,13 @@ public class LoadingTimeInterceptor implements HandlerInterceptor {
     ) throws Exception {
         String controller = ((HandlerMethod) handler).getMethod().getName();
         logger.info("LoadingTimeInterceptor: preHandle() entrando en el controlador {}...", controller);
+
+        long start = System.currentTimeMillis();
+        request.setAttribute("start", start);
+
+        Random random = new Random();
+        int delay = random.nextInt(500);
+        Thread.sleep(delay);
         return true;
     }
 
@@ -33,6 +42,10 @@ public class LoadingTimeInterceptor implements HandlerInterceptor {
             Object handler,
             @Nullable ModelAndView modelAndView
     ) throws Exception {
+        long end = System.currentTimeMillis();
+        long start = (long) request.getAttribute("start");
+        long result = end - start;
+        logger.info("Tiempo transcurrido: {} milisegundos", result);
         String controller = ((HandlerMethod) handler).getMethod().getName();
         logger.info("LoadingTimeInterceptor: postHandle() saliendo del controlador {}...", controller);
     }
