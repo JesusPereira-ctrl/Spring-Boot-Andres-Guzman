@@ -1,5 +1,6 @@
 package com.andres.curso.springboot.di.factura.springbootdifactura.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -20,23 +21,25 @@ public class Invoice {
         this.items = items;
     }
 
+    @JsonProperty
     public Client getClient() {
         return client;
     }
 
+    @JsonProperty
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
+    @JsonProperty
     public List<Item> getItems() {
         return items;
     }
 
+    @JsonProperty
     public int getTotal() {
-        return 0;
+        return items.stream()
+                .map(Item::getImporte)
+                .reduce(0, Integer::sum);
     }
 }

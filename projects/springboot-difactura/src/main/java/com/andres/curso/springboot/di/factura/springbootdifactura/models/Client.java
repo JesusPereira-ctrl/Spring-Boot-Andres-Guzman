@@ -1,5 +1,6 @@
 package com.andres.curso.springboot.di.factura.springbootdifactura.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -12,19 +13,13 @@ public class Client {
     @Value("${client.lastName}")
     private String lastName;
 
+    @JsonProperty
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    @JsonProperty
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 }

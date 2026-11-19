@@ -1,5 +1,7 @@
 package com.andres.curso.springboot.di.factura.springbootdifactura.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Item {
 
     private Product product;
@@ -14,22 +16,17 @@ public class Item {
         this.quantity = quantity;
     }
 
+    @JsonProperty
     public Product getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
+    @JsonProperty
     public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
+    @JsonProperty
     public int getImporte() {
         return quantity * product.getPrice();
     }

@@ -1,29 +1,25 @@
 package com.andres.curso.springboot.di.factura.springbootdifactura.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Product {
 
-    private String name;
+    private final String name;
 
-    private Integer price;
+    private final Integer price;
 
     public Product(String name, Integer price) {
         this.name = name;
         this.price = price;
     }
 
+    @JsonProperty
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    @JsonProperty
     public Integer getPrice() {
         return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
     }
 }
