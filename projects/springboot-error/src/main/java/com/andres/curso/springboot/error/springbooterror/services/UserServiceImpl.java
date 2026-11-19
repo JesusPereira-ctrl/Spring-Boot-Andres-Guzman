@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Long id) {
+    public Optional<User> findById(Long id) {
         User user = null;
 
         for (User u : users) {
@@ -37,6 +38,6 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        return user;
+        return Optional.ofNullable(user);
     }
 }
