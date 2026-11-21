@@ -17,39 +17,35 @@ public class GreetingAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(GreetingAspect.class);
 
-    @Pointcut("execution(* com.andres.curso.springboot.app.aop.springbootaop.services.GreetingService.*(..))")
-    private void greetingLoggerPointCut() {
-    }
-
-    @Before("greetingLoggerPointCut()")
+    @Before("GreetingServicePointCuts.greetingLoggerPointCut()")
     public void loggerBefore(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("Antes del método: {} con los argumentos {}", method, args);
     }
 
-    @After("greetingLoggerPointCut()")
+    @After("GreetingServicePointCuts.greetingLoggerPointCut()")
     public void loggerAfter(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("Después del método: {} con los argumentos {}", method, args);
     }
 
-    @AfterReturning("greetingLoggerPointCut()")
+    @AfterReturning("GreetingServicePointCuts.greetingLoggerPointCut()")
     public void loggerAfterReturning(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("Después de retornar: {} con los argumentos {}", method, args);
     }
 
-    @AfterThrowing("greetingLoggerPointCut()")
+    @AfterThrowing("GreetingServicePointCuts.greetingLoggerPointCut()")
     public void loggerAfterThrowing(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("Después de lanzar la excepción: {} con los argumentos {}", method, args);
     }
 
-    @Around("greetingLoggerPointCut()")
+    @Around("GreetingServicePointCuts.greetingLoggerPointCut()")
     public Object loggerAround(ProceedingJoinPoint joinPoint) throws Throwable {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
