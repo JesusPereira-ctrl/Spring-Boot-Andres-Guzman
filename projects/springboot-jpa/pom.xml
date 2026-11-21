@@ -12,7 +12,7 @@
     <artifactId>springboo-jpa</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>springboo-jpa</name>
-    <description>springboo-jpa</description>
+    <description>springboot-jpa</description>
     <url/>
     <licenses>
         <license/>
