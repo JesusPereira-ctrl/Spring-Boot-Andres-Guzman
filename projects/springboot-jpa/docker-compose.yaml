@@ -7,6 +7,6 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: sasa1234
-      MYSQL_DATABASE: db_users_springboot
+      MYSQL_DATABASE: db_springboot
     volumes:
       - ./mysql_data:/var/lib/mysql
