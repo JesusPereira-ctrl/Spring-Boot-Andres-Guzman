@@ -5,8 +5,10 @@ import com.andres.curso.springboot.jpa.springboojpa.repositories.PersonRepositor
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Scanner;
 
 @SpringBootApplication
 public class SpringbootJpaApplication implements CommandLineRunner {
@@ -26,12 +28,30 @@ public class SpringbootJpaApplication implements CommandLineRunner {
         create();
     }
 
+    @Transactional
     public void create() {
-        Person person = new Person(null, "Lalo", "Thor", "Python");
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el nombre:");
+        String name = scanner.next();
+
+        System.out.println("Ingrese el apellido:");
+        String lastName = scanner.next();
+
+        System.out.println("Ingrese el lenguaje de programación:");
+        String programmingLanguage = scanner.next();
+        
+        scanner.close();
+
+        Person person = new Person(null, name, lastName, programmingLanguage);
+
         Person personNew = this.personRepository.save(person);
         System.out.println(personNew);
+
+        this.personRepository.findById(personNew.getId()).ifPresent(System.out::println);
     }
 
+    @Transactional(readOnly = true)
     public void findOne() {
         // Person person = null;
         // Optional<Person> optionalPerson = this.personRepository.findById(1L);
@@ -43,6 +63,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
         this.personRepository.findOneLikeName("hn").ifPresent(System.out::println);
     }
 
+    @Transactional(readOnly = true)
     public void list() {
         // List<Person> persons = (List<Person>) this.personRepository.findAll();
         // List<Person> persons = this.personRepository.buscarByProgrammingLanguage("Python", "Pepe");
