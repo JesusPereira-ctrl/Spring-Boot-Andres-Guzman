@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -25,7 +26,34 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        create();
+        update();
+    }
+
+    @Transactional
+    public void update() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el id de la persona:");
+        Long id = scanner.nextLong();
+
+        Optional<Person> optionalPerson = this.personRepository.findById(id);
+
+        // optionalPerson.ifPresent(person -> {
+        if (optionalPerson.isPresent()) {
+            Person person = optionalPerson.orElseThrow();
+
+            System.out.println(person);
+            System.out.println("Ingrese el lenguaje de programación:");
+            String programmingLanguage = scanner.next();
+            person.setProgrammingLanguage(programmingLanguage);
+            Person personDb = this.personRepository.save(person);
+            System.out.println(personDb);
+        } else {
+            System.out.println("El usuario no esta presente! no existe!");
+        }
+        // });
+
+        scanner.close();
     }
 
     @Transactional
@@ -40,7 +68,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
         System.out.println("Ingrese el lenguaje de programación:");
         String programmingLanguage = scanner.next();
-        
+
         scanner.close();
 
         Person person = new Person(null, name, lastName, programmingLanguage);
