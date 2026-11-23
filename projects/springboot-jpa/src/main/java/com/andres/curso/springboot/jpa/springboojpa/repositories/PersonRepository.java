@@ -10,6 +10,9 @@ import java.util.Optional;
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
+    @Query("SELECT MIN(p.id), MAX(p.id), SUM(p.id), AVG(LENGTH(p.name)), COUNT(*) FROM Person p")
+    Object getResumeAggregationFunction();
+
     @Query("SELECT MIN(LENGTH(p.name)) FROM Person p")
     Integer getMinLengthName();
 
