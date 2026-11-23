@@ -2,6 +2,8 @@ package com.andres.curso.springboot.jpa.springboojpa.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "persons")
 public class Person {
@@ -17,6 +19,12 @@ public class Person {
     @Column(name = "programming_language")
     private String programmingLanguage;
 
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     public Person() {
     }
 
@@ -30,6 +38,18 @@ public class Person {
         this.name = name;
         this.lastName = lastName;
         this.programmingLanguage = programmingLanguage;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        System.out.println("evento del ciclo de vida del objeto entity pre-persist");
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        System.out.println("evento del ciclo de vida del objeto entity pre-update");
+        this.updatedAt = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -69,6 +89,8 @@ public class Person {
         return "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", programmingLanguage='" + programmingLanguage + '\'';
+                ", programmingLanguage='" + programmingLanguage + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt;
     }
 }
