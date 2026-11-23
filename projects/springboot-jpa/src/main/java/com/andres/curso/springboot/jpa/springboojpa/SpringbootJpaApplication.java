@@ -1,5 +1,6 @@
 package com.andres.curso.springboot.jpa.springboojpa;
 
+import com.andres.curso.springboot.jpa.springboojpa.dto.PersonDto;
 import com.andres.curso.springboot.jpa.springboojpa.entities.Person;
 import com.andres.curso.springboot.jpa.springboojpa.repositories.PersonRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -41,6 +42,10 @@ public class SpringbootJpaApplication implements CommandLineRunner {
         System.out.println("========== consulta que puebla y devuelve objeto entity de una instancia personalizada ==========");
         List<Person> persons = this.personRepository.findAllObjectPersonPersonalized();
         persons.forEach(System.out::println);
+
+        System.out.println("========== consulta que puebla y devuelve objeto dto de una clase personalizada ==========");
+        List<PersonDto> personsDto = this.personRepository.findAllPersonDto();
+        personsDto.forEach(System.out::println);
     }
 
     @Transactional(readOnly = true)
