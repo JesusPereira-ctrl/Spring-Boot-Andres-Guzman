@@ -27,7 +27,17 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        personalizedQueriesConcatUpperAndLowerCase();
+        personalizedQueriesBetween();
+    }
+
+    @Transactional(readOnly = true)
+    public void personalizedQueriesBetween() {
+        System.out.println("========== consulta por rangos ==========");
+        List<Person> persons = this.personRepository.findAllBetweenId();
+        persons.forEach(System.out::println);
+
+        persons = this.personRepository.findAllBetweenName();
+        persons.forEach(System.out::println);
     }
 
     @Transactional(readOnly = true)
