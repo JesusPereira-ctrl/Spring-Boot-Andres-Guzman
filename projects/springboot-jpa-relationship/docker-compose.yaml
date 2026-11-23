@@ -1,0 +1,12 @@
+services:
+  db:
+    image: mysql:9-oracle
+    restart: always
+    container_name: mysql_database
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: sasa1234
+      MYSQL_DATABASE: db_jpa_relationship
+    volumes:
+      - ./mysql_data:/var/lib/mysql
