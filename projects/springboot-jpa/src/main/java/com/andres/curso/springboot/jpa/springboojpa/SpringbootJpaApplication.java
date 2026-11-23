@@ -34,18 +34,32 @@ public class SpringbootJpaApplication implements CommandLineRunner {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("========== consulta solo el nombre por el id ==========");
-        System.out.println("Ingrese el id para el nombre:");
+        System.out.println("Ingrese el id:");
         Long id = scanner.nextLong();
         scanner.close();
 
+        System.out.println("========== mostrando solo el nombre ==========");
         String name = this.personRepository.getNameById(id);
         System.out.println(name);
 
+        System.out.println("========== mostrando solo el id ==========");
         Long idDb = this.personRepository.getIdById(id);
         System.out.println(idDb);
 
+        System.out.println("========== mostrando nombre completo con concat ==========");
         String fullName = this.personRepository.getFullNameById(id);
         System.out.println(fullName);
+
+        System.out.println("========== consulta por campos personalizados por el id ==========");
+        Optional<Object> optionalReg = this.personRepository.obtenerPersonDataById(id);
+        if (optionalReg.isPresent()) {
+            Object[] personReg = (Object[]) optionalReg.orElseThrow();
+            System.out.println("id=" + personReg[0] + ", nombre=" + personReg[1] + ", apellido=" + personReg[2] + ", lenguaje=" + personReg[3]);
+        }
+
+        System.out.println("========== consulta por campos personalizados lista ==========");
+        List<Object[]> regs = this.personRepository.obtenerPersonDataList();
+        regs.forEach(reg -> System.out.println("id=" + reg[0] + ", nombre=" + reg[1] + ", apellido=" + reg[2] + ", lenguaje=" + reg[3]));
     }
 
     @Transactional
