@@ -27,7 +27,22 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        personalizedQueriesBetween();
+        queriesFunctionAggregation();
+    }
+
+    @Transactional(readOnly = true)
+    public void queriesFunctionAggregation() {
+        System.out.println("========== consulta con el total de registros de la tabla persona ==========");
+        Long count = this.personRepository.totalPerson();
+        System.out.println(count);
+
+        System.out.println("========== consulta con el valor mínimo del id ==========");
+        Long min = this.personRepository.minId();
+        System.out.println(min);
+
+        System.out.println("========== consulta con el valor máximo del id ==========");
+        Long max = this.personRepository.maxId();
+        System.out.println(max);
     }
 
     @Transactional(readOnly = true)
