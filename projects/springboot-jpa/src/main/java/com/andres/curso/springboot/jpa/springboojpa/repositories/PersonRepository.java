@@ -10,6 +10,19 @@ import java.util.Optional;
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
+    @Query("SELECT p.id, UPPER(p.name), LOWER(p.lastName), UPPER(p.programmingLanguage) FROM Person p")
+    List<Object[]> findAllPersonDataListCase();
+
+    @Query("SELECT UPPER(p.name || ' ' || p.lastName) FROM Person p")
+    List<String> findAllFullNameConcatUpper();
+
+    @Query("SELECT LOWER(CONCAT(p.name, ' ', p.lastName)) FROM Person p")
+    List<String> findAllFullNameConcatLower();
+
+    // @Query("SELECT CONCAT(p.name, ' ', p.lastName) FROM Person p")
+    @Query("SELECT p.name || ' ' || p.lastName FROM Person p")
+    List<String> findAllFullNameConcat();
+
     @Query("SELECT COUNT(DISTINCT(p.programmingLanguage)) FROM Person p")
     Long findAllProgrammingLanguagesDistinctCount();
 
