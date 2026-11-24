@@ -10,6 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 @SpringBootApplication
@@ -30,11 +31,27 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        oneToMany();
+        oneToManyFindClient();
     }
 
     @Transactional
-    public void oneToMany() {
+    public void oneToManyFindClient() {
+        Optional<Client> optionalClient = clientRepository.findById(2L);
+
+        optionalClient.ifPresent(client -> {
+            Address address1 = new Address("El vergel", 1234);
+            Address address2 = new Address("Vasco de Gama", 9875);
+
+            client.setAddresses(Arrays.asList(address1, address2));
+
+            this.clientRepository.save(client);
+
+            System.out.println(client);
+        });
+    }
+
+    @Transactional
+    public void oneToManyCreateClient() {
         Client client = new Client("Fran", "Moras");
 
         Address address1 = new Address("El vergel", 1234);

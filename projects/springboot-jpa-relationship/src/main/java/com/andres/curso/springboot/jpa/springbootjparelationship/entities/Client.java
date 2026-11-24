@@ -18,6 +18,7 @@ public class Client {
     private String lastName;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "client_id")
     private List<Address> addresses;
 
     public Client() {
