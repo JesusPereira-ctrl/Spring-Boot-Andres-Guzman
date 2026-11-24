@@ -8,6 +8,12 @@ import java.util.Optional;
 
 public interface ClientRepository extends CrudRepository<Client, Long> {
 
-    @Query("SELECT c FROM Client c JOIN FETCH c.addresses WHERE c.id = ?1")
+    @Query("SELECT c FROM Client c LEFT JOIN FETCH c.addresses WHERE c.id = ?1")
+    Optional<Client> findOneByIdWithAddresses(Long id);
+
+    @Query("SELECT c FROM Client c LEFT JOIN FETCH c.invoices WHERE c.id = ?1")
+    Optional<Client> findOneByIdWithInvoices(Long id);
+
+    @Query("SELECT c FROM Client c LEFT JOIN FETCH c.invoices LEFT JOIN FETCH c.addresses WHERE c.id = ?1")
     Optional<Client> findOneById(Long id);
 }
