@@ -11,7 +11,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootApplication
@@ -35,7 +37,28 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        removeAddressFindClient();
+        oneToManyInvoiceBidirectional();
+    }
+
+    @Transactional
+    public void oneToManyInvoiceBidirectional() {
+        Client client = new Client("Fran", "Moras");
+
+        Invoice invoice1 = new Invoice("Compras De La Casa", 5000L);
+        Invoice invoice2 = new Invoice("Compras De Oficina", 8000L);
+
+        List<Invoice> invoices = new ArrayList<>();
+        invoices.add(invoice1);
+        invoices.add(invoice2);
+
+        client.setInvoices(invoices);
+
+        invoice1.setClient(client);
+        invoice2.setClient(client);
+
+        this.clientRepository.save(client);
+
+        System.out.println(client);
     }
 
     @Transactional
