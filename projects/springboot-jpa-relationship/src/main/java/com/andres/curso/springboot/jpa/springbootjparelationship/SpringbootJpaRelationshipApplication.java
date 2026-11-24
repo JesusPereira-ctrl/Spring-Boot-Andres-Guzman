@@ -7,6 +7,7 @@ import com.andres.curso.springboot.jpa.springbootjparelationship.repositories.In
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -31,6 +32,7 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
         manyToOneFindByIdClient();
     }
 
+    @Transactional
     public void manyToOneCreateClient() {
         Client client = new Client("John", "Doe");
         client = this.clientRepository.save(client);
@@ -42,6 +44,7 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
         System.out.println(invoice);
     }
 
+    @Transactional
     public void manyToOneFindByIdClient() {
         Optional<Client> optionalClient = this.clientRepository.findById(1L);
 
