@@ -27,8 +27,12 @@ public class Client {
     )
     private List<Address> addresses;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "client")
+    private List<Invoice> invoices;
+
     public Client() {
         addresses = new ArrayList<>();
+        invoices = new ArrayList<>();
     }
 
     public Client(String name, String lastName) {
@@ -69,6 +73,14 @@ public class Client {
         this.addresses = addresses;
     }
 
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -76,6 +88,7 @@ public class Client {
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", addresses=" + addresses +
+                ", invoices=" + invoices +
                 '}';
     }
 }
