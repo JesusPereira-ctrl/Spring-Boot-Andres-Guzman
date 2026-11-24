@@ -2,6 +2,8 @@ package com.andres.curso.springboot.jpa.springbootjparelationship.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "addresses")
 public class Address {
@@ -53,5 +55,17 @@ public class Address {
                 ", street='" + street + '\'' +
                 ", number=" + number +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(id, address.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
