@@ -3,6 +3,7 @@ package com.andres.curso.springboot.jpa.springbootjparelationship;
 import com.andres.curso.springboot.jpa.springbootjparelationship.entities.Address;
 import com.andres.curso.springboot.jpa.springbootjparelationship.entities.Client;
 import com.andres.curso.springboot.jpa.springbootjparelationship.entities.Invoice;
+import com.andres.curso.springboot.jpa.springbootjparelationship.repositories.AddressRepository;
 import com.andres.curso.springboot.jpa.springbootjparelationship.repositories.ClientRepository;
 import com.andres.curso.springboot.jpa.springbootjparelationship.repositories.InvoiceRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -20,9 +21,12 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
 
     private final InvoiceRepository invoiceRepository;
 
-    public SpringbootJpaRelationshipApplication(ClientRepository clientRepository, InvoiceRepository invoiceRepository) {
+    private final AddressRepository addressRepository;
+
+    public SpringbootJpaRelationshipApplication(ClientRepository clientRepository, InvoiceRepository invoiceRepository, AddressRepository addressRepository) {
         this.clientRepository = clientRepository;
         this.invoiceRepository = invoiceRepository;
+        this.addressRepository = addressRepository;
     }
 
     public static void main(String[] args) {
@@ -31,7 +35,33 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        removeAddress();
+        removeAddressFindClient();
+    }
+
+    @Transactional
+    public void removeAddressFindClient() {
+        Optional<Client> optionalClient = clientRepository.findById(2L);
+
+        optionalClient.ifPresent(client -> {
+            Address address1 = new Address("El vergel", 1234);
+            Address address2 = new Address("Vasco de Gama", 9875);
+
+            Address addressSaved1 = this.addressRepository.save(address1);
+            Address addressSaved2 = this.addressRepository.save(address2);
+
+            client.setAddresses(Arrays.asList(addressSaved1, addressSaved2));
+
+            this.clientRepository.save(client);
+
+            System.out.println(client);
+
+            Optional<Client> optionalClient2 = this.clientRepository.findOneById(2L);
+            optionalClient2.ifPresent(c -> {
+                c.getAddresses().remove(addressSaved2);
+                this.clientRepository.save(c);
+                System.out.println(c);
+            });
+        });
     }
 
     @Transactional
