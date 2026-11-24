@@ -1,5 +1,6 @@
 package com.andres.curso.springboot.jpa.springbootjparelationship;
 
+import com.andres.curso.springboot.jpa.springbootjparelationship.entities.Address;
 import com.andres.curso.springboot.jpa.springbootjparelationship.entities.Client;
 import com.andres.curso.springboot.jpa.springbootjparelationship.entities.Invoice;
 import com.andres.curso.springboot.jpa.springbootjparelationship.repositories.ClientRepository;
@@ -29,7 +30,22 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        manyToOneFindByIdClient();
+        oneToMany();
+    }
+
+    @Transactional
+    public void oneToMany() {
+        Client client = new Client("Fran", "Moras");
+
+        Address address1 = new Address("El vergel", 1234);
+        Address address2 = new Address("Vasco de Gama", 9875);
+
+        client.getAddresses().add(address1);
+        client.getAddresses().add(address2);
+
+        this.clientRepository.save(client);
+
+        System.out.println(client);
     }
 
     @Transactional
